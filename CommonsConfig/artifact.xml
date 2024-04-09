@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="Commons_ErrorHandler_Sequence" groupId="com.desafio-choreo.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/Commons_ErrorHandler_Sequence.xml</file>
+    </artifact>
+    <artifact name="Commons_CepWsRestfullRequest_Template" groupId="com.desafio-choreo.template" version="1.0.0" type="synapse/sequenceTemplate" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/templates/Commons_CepWsRestfullRequest_Template.xml</file>
+    </artifact>
+</artifacts>

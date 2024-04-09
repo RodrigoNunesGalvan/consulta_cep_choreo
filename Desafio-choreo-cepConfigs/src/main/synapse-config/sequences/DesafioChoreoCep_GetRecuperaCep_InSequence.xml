@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="DesafioChoreoCep_GetRecuperaCep_InSequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <property expression="get-property('MessageID')" name="transactionId" scope="default" type="STRING"/>
+    <log level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property name="step" value="SERVICE_INI"/>
+    </log>
+    <propertyGroup>
+        <property name="API_NAME" scope="default" type="STRING" value="DesafioChoreoCep"/>
+        <property expression="get-property('To')" name="API_URI" scope="default" type="STRING"/>
+        <property name="API_RESOURCE" scope="default" type="STRING" value="/ws/{cep}/json"/>
+        <property name="API_METHOD" scope="default" type="STRING" value="GET"/>
+        <property name="API_REQUEST_BODY" scope="default" type="STRING" value="{}"/>
+    </propertyGroup>
+    <sequence key="DesafioChoreoCep_GetRecuperaCep_Sequence"/>
+    <loopback/>
+</sequence>

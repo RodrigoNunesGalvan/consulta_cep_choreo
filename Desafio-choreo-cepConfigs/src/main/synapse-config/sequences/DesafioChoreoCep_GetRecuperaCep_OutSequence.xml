@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="DesafioChoreoCep_GetRecuperaCep_OutSequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <property action="remove" name="Authorization" scope="transport"/>
+    <header expression="substring-after(get-property('MessageID'),'uuid:')" name="MessageID" scope="transport"/>
+    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+    <jsontransform>
+        <property name="synapse.commons.json.output.autoPrimitive" value="false"/>
+    </jsontransform>
+    <log level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property expression="json-eval($)" name="RESPOND TO CLIENT"/>
+    </log>
+    <log description="SERVICE_END_LOG" level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property name="step" value="SERVICE_FIN"/>
+    </log>
+    <respond/>
+</sequence>

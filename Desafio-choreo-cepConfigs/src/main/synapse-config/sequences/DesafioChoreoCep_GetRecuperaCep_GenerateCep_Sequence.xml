@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="DesafioChoreoCep_GetRecuperaCep_GenerateCep_Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property name="step" value="DesafioChoreoCep_GetRecuperaCep_GenerateCep_Sequence_Ini"/>
+    </log>
+    <!-- Definir valor de cep -->
+    <property expression="get-property('uri.var.cep')" name="cep" scope="default" type="STRING"/>
+    <!-- Chamada ao template Commons_CepWsRestfullRequest_Template -->
+    <call-template target="Commons_CepWsRestfullRequest_Template">
+        <with-param name="CEP_WS_RESTFULL_METHOD" value="GET"/>
+        <with-param name="CEP_WS_RESTFULL_RESOURCE" value="{concat('/ws/', $ctx:cep, '/json')}"/>
+    </call-template>
+    <filter regex="200" source="$axis2:HTTP_SC">
+        <then>
+            <log level="custom">
+                <property expression="$ctx:transactionId" name="transactionId"/>
+                <property name="step" value="Success!"/>
+            </log>
+        </then>
+        <else>
+            <log category="ERROR" level="custom">
+                <property expression="$ctx:transactionId" name="transactionId"/>
+                <property name="step" value="Failed into retrieve Cep Data"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>{ "retorno": { "item": { "type": "CEP", "id": "I_BR", "number": "400", "message": "Erro no corpo da requisição" } } }</format>
+                <args/>
+            </payloadFactory>
+            <property name="HTTP_SC" scope="axis2" type="STRING" value="500"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+        </else>
+    </filter>
+    <filter regex="true" source="//jsonObject/erro">
+        <then>
+            <log level="custom">
+                <property expression="$ctx:transactionId" name="transactionId"/>
+                <property name="step" value="Erro: CEP inválido"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>{ "retorno": { "item": { "type": "WSO2", "id": "I_BR", "number": "400", "message": "O CEP é inválido." } } }</format>
+                <args/>
+            </payloadFactory>
+            <property name="HTTP_SC" scope="axis2" type="STRING" value="400"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <respond/>
+        </then>
+        <else>
+            <log level="custom">
+                <property expression="$ctx:transactionId" name="transactionId"/>
+                <property name="step" value="Resposta sem erro"/>
+            </log>
+        </else>
+    </filter>
+    <log level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property name="step" value="DesafioChoreoCep_GetRecuperaCep_GenerateCep_Sequence_Sequence_Fin"/>
+    </log>
+</sequence>

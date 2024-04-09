@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="DesafioChoreoCep_GetRecuperaCep_Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property name="step" value="DesafioChoreoCep_GetRecuperaCep_Sequence_Ini"/>
+    </log>
+    <sequence key="DesafioChoreoCep_GetRecuperaCep_CheckinParameters_Sequence"/>
+    <!-- Verifica se o resultado da sequence foi de falha -->
+    <filter regex="40[0-9]|50[0-9]" source="$axis2:HTTP_SC">
+        <then/>
+        <else>
+            <sequence key="DesafioChoreoCep_GetRecuperaCep_GenerateCep_Sequence"/>
+        </else>
+    </filter>
+    <!-- Faz a transformação do resultado das validações anteriores e responde -->
+    <property name="messageType" scope="axis2" type="STRING" value="application/xml"/>
+    <xslt key="conf:transformations/DesafioChoreoCep_GetRecuperaCep_Sequence_Response_Transformation.xslt"/>
+    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+    <log level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property name="step" value="DesafioChoreoCep_GetRecuperaCep_Sequence_Fin"/>
+    </log>
+</sequence>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="Commons_ErrorHandler_Sequence" statistics="enable" trace="enable" xmlns="http://ws.apache.org/ns/synapse">
+    <property name="HTTP_SC" scope="axis2" type="STRING" value="500"/>
+    <log category="ERROR" level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property expression="$ctx:ERROR_CODE" name="ERROR_CODE"/>
+    </log>
+    <log category="ERROR" level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property expression="$ctx:ERROR_MESSAGE" name="ERROR_MESSAGE"/>
+    </log>
+    <log category="ERROR" level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property expression="$ctx:ERROR_DETAIL" name="ERROR_DETAIL"/>
+    </log>
+    <log category="ERROR" level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property expression="$body" name="ERROR_BODY"/>
+    </log>
+    <filter regex="false" source="boolean(get-property('ERROR_DETAIL'))">
+        <then>
+            <property expression="concat('Internal Server Error. MessageID: ', substring-after(get-property('MessageID'), 'uuid:'))" name="ERROR_DETAIL" scope="default" type="STRING"/>
+        </then>
+        <else/>
+    </filter>
+    <payloadFactory media-type="json">
+        <format>{ "retorno": { "tipo": "WSO2_FAULT", "id": "$1", "numero": "$2", "mensgem": "$3" } }</format>
+        <args>
+            <arg evaluator="xml" expression="$axis2:HTTP_SC"/>
+            <arg evaluator="xml" expression="get-property('ERROR_MESSAGE')"/>
+            <arg evaluator="xml" expression="get-property('ERROR_DETAIL')"/>
+        </args>
+    </payloadFactory>
+    <log category="ERROR" level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property name="step" value="SERVICE_FIN"/>
+    </log>
+    <property name="HTTP_SC" scope="axis2" type="STRING" value="500"/>
+    <property action="remove" name="Authorization" scope="transport"/>
+    <header expression="get-property('MessageID')" name="MessageID" scope="transport"/>
+    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+    <jsontransform>
+        <property name="synapse.commons.json.output.autoPrimitive" value="false"/>
+    </jsontransform>
+    <respond/>
+</sequence>

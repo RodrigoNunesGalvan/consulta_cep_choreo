@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?><resource name="DesafioChoreoCep_GetRecuperaCep_Sequence_Response_Transformation.xslt" isCollection="false" path="/_system/config/transformations/Desafio-choreo-cepRegistryResources/DesafioChoreoCep_GetRecuperaCep_Sequence_Response_Transformation.xslt" registryUrl="https://localhost:9443/registry" status="added">
+    <mediaType>application/xslt+xml</mediaType>
+</resource>

@@ -1,0 +1,17 @@
+version: '3'
+services:
+    esb:
+        image: wso2/wso2mi:4.0.0-centos
+        build: .
+        container_name: wso2mi-desafio-choreo
+        ports:
+            - "8290:8290"
+            - "8253:8253"
+        env_file:
+            #- .env
+            - .env.test
+        networks:
+            - wso2mi-desafio-choreo-network
+networks:
+    wso2mi-desafio-choreo-network:
+        driver: bridge

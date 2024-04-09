@@ -1,0 +1,24 @@
+openapi: 3.0.1
+info:
+  title: DesafioChoreoCep
+  description: API Definition of DesafioChoreoCep
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/cep
+paths:
+  /ws/{cep}/json:
+    get:
+      parameters:
+      - name: cep
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
+  /api/health/check:
+    get:
+      responses:
+        default:
+          description: Default response

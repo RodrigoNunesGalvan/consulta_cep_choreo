@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="DesafioChoreoCep_GetRecuperaCep_CheckinParameters_Sequence" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property name="step" value="DesafioChoreoCep_GetRecuperaCep_CheckinParameters_Sequence_Ini"/>
+    </log>
+    <propertyGroup>
+        <property expression="get-property('uri.var.cep')" name="cep" scope="default" type="STRING"/>
+    </propertyGroup>
+    <filter regex="^\d{8}$" source="$ctx:cep">
+        <then>
+            <log level="custom">
+                <property expression="$ctx:transactionId" name="transactionId"/>
+                <property name="step" value="Comprimento do CEP válido"/>
+            </log>
+            <property expression="$ctx:cep" name="cep" scope="default" type="STRING"/>
+        </then>
+        <else>
+            <log category="ERROR" level="custom">
+                <property expression="$ctx:transactionId" name="transactionId"/>
+                <property name="step" value="Comprimento do CEP inválido"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>{ "retorno": { "item": { "type": "WSO2", "id": "I_BR", "number": "400", "message": "O CEP deve ter 8 números." } } }</format>
+                <args/>
+            </payloadFactory>
+            <property name="HTTP_SC" scope="axis2" type="STRING" value="400"/>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <respond/>
+        </else>
+    </filter>
+    <!--  Monta uma estrutura de falha caso algum parâmetro obrigatório não tenha sido informado  -->
+    <filter regex="true" source="boolean($ctx:badReqMessage)">
+        <then>
+            <log level="custom">
+                <property expression="$ctx:transactionId" name="transactionId"/>
+                <property expression="concat('[ERROR] - ', $ctx:badReqMessage)" name="step"/>
+            </log>
+            <payloadFactory media-type="json">
+                <format>{ "retorno": { "item": { "type": "WSO2", "id": "I_BR", "number": "400", "message": "$1" } } }</format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:badReqMessage"/>
+                </args>
+            </payloadFactory>
+            <property name="HTTP_SC" scope="axis2" type="STRING" value="400"/>
+        </then>
+        <else>
+            <log level="custom">
+                <property expression="$ctx:transactionId" name="transactionId"/>
+                <property name="step" value="Success!"/>
+            </log>
+        </else>
+    </filter>
+    <log level="custom">
+        <property expression="$ctx:transactionId" name="transactionId"/>
+        <property name="step" value="DesafioChoreoCep_GetRecuperaCep_CheckinParameters_Sequence_Fin"/>
+    </log>
+</sequence>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="DesafioChoreoCep" groupId="com.desafio-choreo.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/DesafioChoreoCep.xml</file>
+    </artifact>
+    <artifact name="DesafioChoreoCep_swagger" groupId="com.desafio-choreo.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/DesafioChoreoCep_swagger.yaml</file>
+    </artifact>
+    <artifact name="DesafioChoreoCep_metadata" groupId="com.desafio-choreo.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/DesafioChoreoCep_metadata.yaml</file>
+    </artifact>
+    <artifact name="DesafioChoreoCep_GetRecuperaCep_InSequence" groupId="com.desafio-choreo.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/DesafioChoreoCep_GetRecuperaCep_InSequence.xml</file>
+    </artifact>
+    <artifact name="DesafioChoreoCep_GetRecuperaCep_OutSequence" groupId="com.desafio-choreo.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/DesafioChoreoCep_GetRecuperaCep_OutSequence.xml</file>
+    </artifact>
+    <artifact name="DesafioChoreoCep_GetRecuperaCep_Sequence" groupId="com.desafio-choreo.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/DesafioChoreoCep_GetRecuperaCep_Sequence.xml</file>
+    </artifact>
+    <artifact name="DesafioChoreoCep_GetRecuperaCep_GenerateCep_Sequence" groupId="com.desafio-choreo.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/DesafioChoreoCep_GetRecuperaCep_GenerateCep_Sequence.xml</file>
+    </artifact>
+    <artifact name="DesafioChoreoCep_GetRecuperaCep_CheckinParameters_Sequence" groupId="com.desafio-choreo.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/DesafioChoreoCep_GetRecuperaCep_CheckinParameters_Sequence.xml</file>
+    </artifact>
+</artifacts>
