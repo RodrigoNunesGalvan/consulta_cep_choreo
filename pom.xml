@@ -58,13 +58,6 @@
       <build />
     </profile>
     <profile>
-      <id>Docker</id>
-      <build />
-      <modules>
-        <module>Desafio-choreo-cepDockerExporter</module>
-      </modules>
-    </profile>
-    <profile>
       <id>Kubernetes</id>
       <build />
     </profile>
