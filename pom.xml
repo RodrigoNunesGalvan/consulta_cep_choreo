@@ -66,9 +66,6 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <build />
-      <modules>
-        <module>Desafio-choreo-cepDockerExporter</module>
-      </modules>
     </profile>
   </profiles>
 </project>
